@@ -1,0 +1,19 @@
+Configuration:
+  status: warn
+  name: BasicConfig
+  shutdownHook: disable
+
+  thresholdFilter:
+    level: debug
+
+  appenders:
+    Console:
+      name: STDOUT
+      PatternLayout:
+        Pattern: "%d %p %C{1.} [%t] %m%n"
+
+  Loggers:
+    Root:
+      level: debug
+      AppenderRef:
+        ref: STDOUT

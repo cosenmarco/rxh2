@@ -1,0 +1,9 @@
+rootProject.name ='rxh2'
+
+include ':server'
+include ':client'
+
+include ':example-echo-server'
+
+project(':server').name = 'rxh2-server'
+project(':client').name = 'rxh2-client'
