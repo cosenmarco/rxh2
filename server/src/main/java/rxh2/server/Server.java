@@ -1,8 +1,6 @@
 package rxh2.server;
 
-import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler;
-import io.reactivex.subjects.Subject;
 import rxh2.server.impl.ServerImpl;
 
 /**
@@ -13,6 +11,7 @@ public class Server {
   private int port = 0;
   private Runnable shutdownCallback;
   private ChannelHandler serverChannelHandler;
+  private boolean secure;
 
   private Server() {
   }
@@ -45,6 +44,11 @@ public class Server {
     return this;
   }
 
+  public Server secure() {
+    this.secure = true;
+    return this;
+  }
+
   /**
    * Binds to the specified port and starts the event processing.
    *
@@ -55,7 +59,8 @@ public class Server {
         new ServerImpl.ServerConfig(
             port,
             serverChannelHandler,
-            shutdownCallback)
+            shutdownCallback,
+            secure)
     ).bind();
   }
 

@@ -39,12 +39,16 @@ public class ServerImpl implements ServerHandle {
 
     try {
       ServerBootstrap b = new ServerBootstrap();
+      final MainChannelInitializer childHandler = new MainChannelInitializer(
+          (Channel channel) -> Http2Processor.createFor(channel),
+          config.secure
+      );
+
       b.group(bossGroup, workerGroup)
           .channel(NioServerSocketChannel.class)
           .option(ChannelOption.SO_BACKLOG, 100)
           .handler(new LoggingHandler(LogLevel.INFO))
-          .childHandler(
-              new MainChannelInitializer((Channel channel) -> new Http2Processor(channel)));
+          .childHandler(childHandler);
 
       // Start the server.
       try {
@@ -85,6 +89,6 @@ public class ServerImpl implements ServerHandle {
     private final int port;
     private final ChannelHandler serverChannelHandler;
     private final Runnable shutdownCallback;
-//    private final Subject<ChannelEvent> channelProcessor;
+    private final boolean secure;
   }
 }

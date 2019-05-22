@@ -25,6 +25,7 @@ public class EchoServer {
         .port(8888)
         .serverChannelHandler(new LoggingHandler(LogLevel.INFO))
         .shutdownCallback(() -> log.info("Shutting down server!"))
+        .secure()
         .bind();
 
     Runtime.getRuntime().addShutdownHook(new Thread(() -> {
